@@ -1,4 +1,4 @@
-from flask import Flask, render_template,request,redirect, url_for, flash
+from flask import Flask, render_template,redirect, url_for, flash
 
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -7,11 +7,12 @@ from forms import AddPetForm, EditPetForm
 
 app = Flask(__name__)
 
+app.config['SECRET_KEY'] = 'secretbestie'
+
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql:///adopt"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secretbestie'
-app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
+app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 
 connect_db(app)
 db.create_all()
@@ -79,6 +80,5 @@ def contact_us():
 
 
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=5100)
